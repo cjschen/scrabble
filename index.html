@@ -1,33 +1,22 @@
 <html lang='en'>
 <head>
-  <style src="resources/style.css"> </style>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css">
+  <link rel="stylesheet" href="resources/styles.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-<form action="template/game.html" id='game-form'>
+<form action="templates/game.html" id='game-form'>
   <div class="form-group">
     <label for="num-players-select">Number of Players</label>
     <select class="form-control" id="num-players-select">
-      <option>1</option>
       <option>2</option>
       <option>3</option>
       <option>4</option>
     </select>
   </div>
   <div class="form-group" id="players-select">
-    <div class="input-group">
-      <span class="input-group-addon">
-        <svg width="10" height="10">
-          <rect width="10" height="10"style="fill:#DF0034;stroke-width:1;stroke:rgb(0,0,0)"/>
-        </svg>
-        Player 1
-      </span>
-      <input id="msg" type="text" class="form-control" name="msg" placeholder="Name">
-    </div>
+
   </div>
   <button type="submit" class="btn btn-default">Let's Play!</button>
-
 
 </form>
 
