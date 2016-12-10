@@ -1,0 +1,48 @@
+// out: styles.css, sourcemap: true, compress: false
+
+@letter-size: 32px;
+@padding-letter: 7px;
+
+.cell  {
+  padding: @padding-letter;
+  width: @letter-size;
+  height: @letter-size;
+}
+
+body {
+  padding: 20px;
+}
+
+.player-color {
+  margin-right:5px
+}
+
+table, td {
+
+  border-collapse: collapse;
+}
+
+.letter {
+  .cell;
+  font-size: @letter-size;
+  border: black 1px solid;
+  background-image: url(http://3.bp.blogspot.com/-V_yVhgaCrEI/UUa11hnUPdI/AAAAAAAAE9s/dxlTfXr1BU4/s1600/light-wood-pattern.jpg);
+}
+
+.board {
+  td {
+    border: black 1px solid;
+    padding: @padding-letter;
+  }
+}
+
+.player-letters {
+  .span {
+    width:100%;
+    float:none;
+    clear:both;
+  }
+  .letter {
+    float:left;
+  }
+}
