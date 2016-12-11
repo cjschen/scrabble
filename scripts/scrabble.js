@@ -1,7 +1,7 @@
 $(document).ready(function() {
   init();
-  // $("#num-players-select").on('change', drawPlayerSelection);
-  $('')
+
+  $('#submit-turn').click(onSubmit);
 });
 
 
@@ -38,7 +38,7 @@ class Player {
     for(var i in this.letters) {
          string += '<div class="letter draggable">' + this.letters[i] + "</div>"
     }
-    string += "<button id='submitTurn'> Submit </button>"
+    string += "<button id='submit-turn'> Submit </button>"
     string += "</div>"
 
     $("body").append(string);
@@ -58,16 +58,26 @@ function initGame() {
   for(var i in game.players) {
     game.players[i].addLetters(['A','L','F','S','E','A','D']);
   }
-  $(function() {
-    $(".letter").draggable();
-  });
 
   game.players[0].drawTurn();
 
+  $(function() {
+    $(".letter").draggable({
+      stop: dragend
+    });
+  });
+
+  // $(".letter").on("dragstop", drag
   // Handle
 }
 
+function dragend() {
+  debugger;
+}
+
 function onSubmit(e) {
+
+  // debugger;
 
 }
 
