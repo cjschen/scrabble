@@ -1,12 +1,35 @@
 // out: styles.css, sourcemap: true, compress: false
 
 @letter-size: 32px;
+@score-size: 10px;
 @padding-letter: 7px;
+@2L-color: #a3dbf6;
+@2W-color: #ffa7b6;
+@3L-color: #319ddb;
+@3W-color: #f4564d;
+
+.c2L {
+  background-color: @2L-color;
+}
+
+.c2W {
+  background-color: @2W-color;
+}
+
+.c3L {
+  background-color: @3L-color;
+}
+
+.c3W {
+  background-color: @3W-color;
+}
 
 .cell  {
   padding: @padding-letter;
   width: @letter-size;
   height: @letter-size;
+  font-size: @score-size;
+  text-align: center  ;
 }
 
 body {
@@ -45,4 +68,8 @@ table, td {
   .letter {
     float:left;
   }
+}
+
+.draggable {
+  cursor: pointer;
 }

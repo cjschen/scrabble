@@ -1,7 +1,7 @@
 $(document).ready(function() {
   init();
   // $("#num-players-select").on('change', drawPlayerSelection);
-
+  $('')
 });
 
 
@@ -28,15 +28,15 @@ class Player {
 
   drawTurn() {
     var string = '<div class="player-letters">';
-    string +=   '<span>';
+    string +=   '<div>';
     string +=     '<svg width="10" height="10" class="player-color">';
     string +=       '<rect width="10" height="10"';
     string +=       'style="fill:' + gameConst.playerColor[this.number] + ";";
     string +=       'stroke-width:1;stroke:rgb(0,0,0)"/>';
     string +=     '</svg>' + this.name;
-    string +=   '</span>';
+    string +=   '</div>';
     for(var i in this.letters) {
-       string += '<div class="letter">' + this.letters[i] + "</div>"
+         string += '<div class="letter draggable">' + this.letters[i] + "</div>"
     }
     string += "<button id='submitTurn'> Submit </button>"
     string += "</div>"
@@ -58,19 +58,52 @@ function initGame() {
   for(var i in game.players) {
     game.players[i].addLetters(['A','L','F','S','E','A','D']);
   }
+  $(function() {
+    $(".letter").draggable();
+  });
 
   game.players[0].drawTurn();
 
   // Handle
 }
 
+function onSubmit(e) {
+
+}
 
 function drawBoard() {
   var string = '<table class="board">';
-  for(var i = 0; i < gameConst.boardSize ; i++) {
+  string += '<th id="row0">'
+  // string += '<td></td>'
+  for(var j = 0; j < gameConst.boardSize ; j++) {
+    string += '<td>' + String.fromCharCode(65 + j) + '</td>'
+
+  }
+  string += "</th>"
+
+  for(var i = 1; i < gameConst.boardSize + 1; i++) {
     string += '<tr id="row' + i + '">'
+    string += '<td>' + i + '</td>'
     for(var j = 0; j < gameConst.boardSize ; j++) {
-      string += '<td id="cell' + i + '-' + j + '"> <div class="cell"></div>  </td>'
+      var col = String.fromCharCode(65 + j);
+      var colour = gameConst.specialSquares[i][col] ? 'c' + gameConst.specialSquares[i][col] : "";
+      var text = ""
+      if(colour) {
+        if(colour.charAt(0) == '2') {
+          text += 'DOUBLE ';
+        } else {
+          text += 'TRIPLE ';
+        }
+        if(colour.charAt(1) == 'W') {
+          text += 'WORD ';
+        } else {
+          text += 'LETTER ';
+        }
+        text += 'SCORE';
+      }
+
+      string += '<td id="cell' + i + col + '" class="' +
+                colour + '"> <div class="cell">' + text + '</div></td>';
     }
     string += '</tr>'
   }

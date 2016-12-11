@@ -1,7 +1,21 @@
+.c2L {
+  background-color: #a3dbf6;
+}
+.c2W {
+  background-color: #ffa7b6;
+}
+.c3L {
+  background-color: #319ddb;
+}
+.c3W {
+  background-color: #f4564d;
+}
 .cell {
   padding: 7px;
   width: 32px;
   height: 32px;
+  font-size: 10px;
+  text-align: center  ;
 }
 body {
   padding: 20px;
@@ -17,6 +31,8 @@ td {
   padding: 7px;
   width: 32px;
   height: 32px;
+  font-size: 10px;
+  text-align: center  ;
   font-size: 32px;
   border: black 1px solid;
   background-image: url(http://3.bp.blogspot.com/-V_yVhgaCrEI/UUa11hnUPdI/AAAAAAAAE9s/dxlTfXr1BU4/s1600/light-wood-pattern.jpg);
@@ -32,4 +48,7 @@ td {
 }
 .player-letters .letter {
   float: left;
+}
+.draggable {
+  cursor: pointer;
 }
