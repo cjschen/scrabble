@@ -1,9 +1,15 @@
+var lastHovered;
+
 $(document).ready(function() {
   init();
 
-  $('#submit-turn').click(onSubmit);
+  $('#submit-turn button').click(onSubmit);
 });
 
+function drawLetter(letter) {
+  return '<div class="value">' + letter + '<sub>'+ gameConst.scoreLetters[letter] + '</sub></div>';
+  //"<div class="score">' + gameConst.scoreLetters[letter]+ '</div>'
+}
 
 var game = {
   players : []
@@ -27,18 +33,23 @@ class Player {
   }
 
   drawTurn() {
-    var string = '<div class="player-letters">';
-    string +=   '<div>';
+    var string = '<div id="player-letters">';
+    string += "<div id='player-header'>"
     string +=     '<svg width="10" height="10" class="player-color">';
     string +=       '<rect width="10" height="10"';
     string +=       'style="fill:' + gameConst.playerColor[this.number] + ";";
     string +=       'stroke-width:1;stroke:rgb(0,0,0)"/>';
     string +=     '</svg>' + this.name;
     string +=   '</div>';
+    string +=   '<div id="letter-rack">';
+
     for(var i in this.letters) {
-         string += '<div class="letter draggable">' + this.letters[i] + "</div>"
+         string += '<div class="letter draggable">' + drawLetter(this.letters[i]) + "</div>"
     }
-    string += "<button id='submit-turn'> Submit </button>"
+    string += "</div>"
+    string += "<div id='submit-turn'>"
+    string += "<button> Submit </button>"
+    string += "</div>"
     string += "</div>"
 
     $("body").append(string);
@@ -66,19 +77,47 @@ function initGame() {
       stop: dragend
     });
   });
+  game.boardUI = {};
+  game.boardUI.offset = $('#cell1A').position();
+  game.boardUI.dimens = {width: $('#cell1A').outerWidth(), height: $('#cell1A').outerHeight()};
+
 
   // $(".letter").on("dragstop", drag
   // Handle
 }
 
-function dragend() {
-  debugger;
+function dragend(event, ui) {
+
+  var pos = $(this).position();
+
+  var colFloat = (pos.left - game.boardUI.offset.left) / game.boardUI.dimens.height;
+  var rowFloat = (pos.top - game.boardUI.offset.top) / game.boardUI.dimens.width;
+  var row = Math.floor(rowFloat + 0.5) + 1;
+  var col = Math.floor(colFloat + 0.5) + 1;
+
+  if(row < 0 || col < 0 || row > 15 || col > 15) {
+    return;
+  }
+
+  var col = String.fromCharCode(65 + col - 1)
+  if($("#cell" + row + col).hasClass("occupied")) {
+    return;
+  }
+  $("#cell" + row + col).empty();
+  $("#cell" + row + col).toggleClass("occupied");
+  var html = $(this).html();
+  $("#cell" + row + col).append('<div class="letter draggable">' + html + '</div>');
+  $(this).remove();
+  $(function() {
+    $(".letter").draggable({
+      stop: dragend
+    });
+  });
 }
 
 function onSubmit(e) {
 
   // debugger;
-
 }
 
 function drawBoard() {
@@ -120,16 +159,3 @@ function drawBoard() {
   string += '</table>'
   $("body").append(string);
 }
-
-
-// var string = "";
-// for(var i = 0; i < 26; i++) {
-//   string += String.fromCharCode(i + 65) + "<br>"
-// }
-
-
-
-
-// $(document).ready(function() {
-//   $("body").append(string);
-// });
