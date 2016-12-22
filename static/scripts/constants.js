@@ -1,5 +1,6 @@
 var gameConst = {
   boardSize:15,
+  maxPlayerLetters: 7,
   playerColor: [
     "#DF0034",
     "#3303A7",

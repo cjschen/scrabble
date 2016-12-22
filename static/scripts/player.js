@@ -4,6 +4,15 @@ class Player {
     this.number = number;
     this.letters = [];
     this.score = 0;
+    this.topUp()
+  }
+
+  topUp() {
+    var n =  gameConst.maxPlayerLetters - this.letters.length;
+
+    var letters = game.letters.splice(0, n)
+
+    this.addLetters(letters)
   }
 
   addLetters(letters) {

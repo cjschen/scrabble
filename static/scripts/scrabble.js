@@ -10,8 +10,9 @@ $(document).ready(function() {
 
 
 function init() {
+  // game.initLetters();
   game.drawBoard();
-  game.initGame();
+  game.initGameVars();
 }
 
 

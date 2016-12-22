@@ -1,33 +1,30 @@
 var game = {
-    players: [],
-    // constructor(players) {
-    //   this.players = players;
-    //   initGame();
-    // }
+  players: [],
+  // constructor(players) {
+  //   this.players = players;
+  //   initGame();
+  // }
 
-    getPlayerNames() {
-      var url = window.location.href;
-      var queryStart = url.indexOf("?") + 1,
-        queryEnd = url.indexOf("#") + 1 || url.length + 1,
-        query = url.slice(queryStart, queryEnd - 1),
-        pairs = query.replace(/\+/g, " ").split("&");
+  getPlayerNames() {
+    var url = window.location.href;
+    var queryStart = url.indexOf("?") + 1,
+    queryEnd = url.indexOf("#") + 1 || url.length + 1,
+    query = url.slice(queryStart, queryEnd - 1),
+    pairs = query.replace(/\+/g, " ").split("&");
 
-      for (var i = 0; i < pairs.length; i++) {
-        playerName = pairs[i].split("=")[1];
-
-        if(playerName == "") {
-          playerName = "Player " + (i + 1);
-        }
-
-        players.push({name: playerName})
+    for (var i = 0; i < pairs.length; i++) {
+      playerName = pairs[i].split("=")[1];
+      if(playerName == "") {
+        playerName = "Player " + (i + 1);
       }
+      game.players.push(new Player(playerName, i));
     }
   },
 
-  initLetters() {
-
+  initLetters(callback) {
     $.post('/randomize', function(result) {
-      console.log(result);
+      game.letters = eval(result);
+      callback();
     });
   },
 
@@ -39,19 +36,22 @@ var game = {
         game.board[i][String.fromCharCode(65 + j)] = "";
       }
     }
+
+    game.initLetters(game.initGame)
+
   },
 
   initGame() {
 
-    // Make Players
-    game.players[0] = new Player('Sijia', 0);
-    game.players[1] = new Player('Computer', 1);
+    // game.initLet ters();
+    game.boardUI = {};
+    game.boardUI.offset = $('#cell1A').position();
+    game.boardUI.dimens = {
+      width: $('#cell1A').outerWidth(),
+      height: $('#cell1A').outerHeight()
+    };
 
-    game.initLetters()
-
-    for (var i in game.players) {
-      game.players[i].addLetters(['A', 'L', 'F', 'S', 'E', 'A', 'D']);
-    }
+    game.getPlayerNames();
 
     game.players[0].drawTurn();
 
@@ -60,13 +60,6 @@ var game = {
         stop: dragend
       });
     });
-
-    game.boardUI = {};
-    game.boardUI.offset = $('#cell1A').position();
-    game.boardUI.dimens = {
-      width: $('#cell1A').outerWidth(),
-      height: $('#cell1A').outerHeight()
-    };
   },
 
   startGame() {
@@ -116,6 +109,9 @@ var game = {
     }
     string += '</table>'
     $("body").append(string);
+  },
+  submitTurn {
+    console.log("Clicked Submit")
   }
 
 }

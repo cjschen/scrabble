@@ -1,13 +1,18 @@
 from flask import Flask, render_template
-import json
+import json, random
 from constants import *
 app = Flask(__name__)
 
 
 @app.route("/randomize", methods=["GET", "POST"])
 def randomize():
-    print gameConst
-    return json.dumps(gameConst['numLetters'])
+    letters = []
+    for letter in gameConst['numLetters']:
+        for i in range(1, gameConst['numLetters'][letter]):
+            letters.append(letter)
+
+    random.shuffle(letters)
+    return json.dumps(letters)
 
 @app.route("/")
 def index():
