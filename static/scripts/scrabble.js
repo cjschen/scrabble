@@ -2,12 +2,8 @@ var lastHovered;
 
 $(document).ready(function() {
   init();
-
-  $('#submit-turn button').click(onSubmit);
+  $(document).on('click','#submit-turn button', onSubmit)
 });
-
-
-
 
 function init() {
   // game.initLetters();
@@ -48,5 +44,5 @@ function dragend(event, ui) {
 
 function onSubmit(e) {
 
-  // debugger;
+  debugger;
 }

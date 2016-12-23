@@ -60,6 +60,8 @@ var game = {
         stop: dragend
       });
     });
+
+    $("button").on('click', this.submitTurn)
   },
 
   startGame() {
@@ -110,7 +112,7 @@ var game = {
     string += '</table>'
     $("body").append(string);
   },
-  submitTurn {
+  submitTurn() {
     console.log("Clicked Submit")
   }
 
