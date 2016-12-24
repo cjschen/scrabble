@@ -2,13 +2,12 @@ var lastHovered;
 
 $(document).ready(function() {
   init();
-  $(document).on('click','#submit-turn button', onSubmit)
 });
 
 function init() {
   // game.initLetters();
-  game.drawBoard();
   game.initGameVars();
+  game.drawBoard();
 }
 
 
@@ -31,7 +30,6 @@ function dragend(event, ui) {
     return;
   }
   $("#cell" + row + col).empty();
-  $("#cell" + row + col).toggleClass("occupied");
   var html = $(this).html();
   $("#cell" + row + col).append('<div class="letter draggable">' + html + '</div>');
   $(this).remove();
@@ -40,9 +38,4 @@ function dragend(event, ui) {
       stop: dragend
     });
   });
-}
-
-function onSubmit(e) {
-
-  debugger;
 }

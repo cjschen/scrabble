@@ -24,6 +24,7 @@ class Player {
   }
 
   drawTurn() {
+    $("#player-letters").remove();
     var string = '<div id="player-letters">';
     string += "<div id='player-header'>"
     string +=     '<svg width="10" height="10" class="player-color">';

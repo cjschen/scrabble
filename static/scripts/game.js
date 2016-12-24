@@ -1,9 +1,6 @@
 var game = {
   players: [],
-  // constructor(players) {
-  //   this.players = players;
-  //   initGame();
-  // }
+  newLetters: [],
 
   getPlayerNames() {
     var url = window.location.href;
@@ -29,6 +26,7 @@ var game = {
   },
 
   initGameVars() {
+    game.turns = 0;
     game.board = {};
     for (var i = 1; i < gameConst.boardSize + 1; i++) {
       game.board[i] = {};
@@ -61,7 +59,7 @@ var game = {
       });
     });
 
-    $("button").on('click', this.submitTurn)
+    $(document).on('click','#submit-turn button', game.submitTurn)
   },
 
   startGame() {
@@ -72,9 +70,25 @@ var game = {
     return '<div class="value">' + letter + '<sub>' + gameConst.scoreLetters[letter] + '</sub></div>';
     //"<div class="score">' + gameConst.scoreLetters[letter]+ '</div>'
   },
+  finishTurn() {
+
+    $("#cell" + row + col).toggleClass("occupied");
+
+
+    return false;
+  },
+
+  newTurn() {
+    game.turns++;
+    var currPlayer = game.players[game.turns % game.players.length];
+    currPlayer.topUp();
+
+    currPlayer.drawTurn();
+  },
 
   drawBoard() {
-    var string = '<table class="board">';
+
+    var string = '<table id="board">';
     string += '<th id="row0">'
       // string += '<td></td>'
     for (var j = 0; j < gameConst.boardSize; j++) {
@@ -83,12 +97,12 @@ var game = {
     }
     string += "</th>"
 
-    for (var i = 1; i < gameConst.boardSize + 1; i++) {
-      string += '<tr id="row' + i + '">'
-      string += '<td>' + i + '</td>'
+    for (var row = 1; row < gameConst.boardSize + 1; row++) {
+      string += '<tr id="row' + row + '">'
+      string += '<td>' + row + '</td>'
       for (var j = 0; j < gameConst.boardSize; j++) {
         var col = String.fromCharCode(65 + j);
-        var colour = gameConst.specialSquares[i][col] ? 'c' + gameConst.specialSquares[i][col] : "";
+        var colour = gameConst.specialSquares[row][col] ? 'c' + gameConst.specialSquares[row][col] : "";
         var text = ""
         if (colour) {
           if (colour.charAt(0) == '2') {
@@ -103,8 +117,10 @@ var game = {
           }
           text += 'SCORE';
         }
-
-        string += '<td id="cell' + i + col + '" class="' +
+        if(game.board[row][col] != "") {
+          text = game.drawLetter(game.board[row][col]);
+        }
+        string += '<td id="cell' + row + col + '" class="' +
           colour + '"> <div class="cell">' + text + '</div></td>';
       }
       string += '</tr>'
@@ -113,7 +129,10 @@ var game = {
     $("body").append(string);
   },
   submitTurn() {
-    console.log("Clicked Submit")
+    if(!finishTurn()) {
+      // return;
+    }
+    newTurn();
   }
 
 }
