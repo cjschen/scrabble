@@ -70,9 +70,17 @@ var game = {
     return '<div class="value">' + letter + '<sub>' + gameConst.scoreLetters[letter] + '</sub></div>';
     //"<div class="score">' + gameConst.scoreLetters[letter]+ '</div>'
   },
-  finishTurn() {
+  endTurn() {
+    $('td .draggable').each(function(e, o) {
+      var cell = $(this);
+      var string = cell.parent().attr('id');
+      cell.toggleClass("draggable");
+      $(string).toggleClass("occupied");
 
-    $("#cell" + row + col).toggleClass("occupied");
+
+      console.log(string);
+    });
+    // $("#cell" + row + col).toggleClass("occupied");
 
 
     return false;
@@ -129,10 +137,10 @@ var game = {
     $("body").append(string);
   },
   submitTurn() {
-    if(!finishTurn()) {
+    if(!game.endTurn()) {
       // return;
     }
-    newTurn();
+    game.newTurn();
   }
 
 }

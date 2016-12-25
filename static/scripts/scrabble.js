@@ -24,7 +24,6 @@ function dragend(event, ui) {
   if(row < 0 || col < 0 || row > 15 || col > 15) {
     return;
   }
-
   var col = String.fromCharCode(65 + col - 1)
   if($("#cell" + row + col).hasClass("occupied")) {
     return;
@@ -33,6 +32,9 @@ function dragend(event, ui) {
   var html = $(this).html();
   $("#cell" + row + col).append('<div class="letter draggable">' + html + '</div>');
   $(this).remove();
+
+  // game.newLetters.push({row : col});
+
   $(function() {
     $(".letter").draggable({
       stop: dragend
