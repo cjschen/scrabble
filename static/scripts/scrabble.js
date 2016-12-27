@@ -10,8 +10,6 @@ function init() {
   game.drawBoard();
 }
 
-
-
 function dragend(event, ui) {
 
   var pos = $(this).position();
@@ -36,7 +34,7 @@ function dragend(event, ui) {
   // game.newLetters.push({row : col});
 
   $(function() {
-    $(".letter").draggable({
+    $(".draggable").draggable({
       stop: dragend
     });
   });

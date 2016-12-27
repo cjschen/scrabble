@@ -1,6 +1,7 @@
 var game = {
   players: [],
   newLetters: [],
+  currPlayer: null,
 
   getPlayerNames() {
     var url = window.location.href;
@@ -49,21 +50,24 @@ var game = {
       height: $('#cell1A').outerHeight()
     };
 
-    game.getPlayerNames();
+    // game.getPlayerNames();
 
-    game.players[0].drawTurn();
+    // game.players[0].drawTurn();
+    game.startGame();
 
-    $(function() {
-      $(".letter").draggable({
-        stop: dragend
-      });
-    });
-
-    $(document).on('click','#submit-turn button', game.submitTurn)
   },
 
   startGame() {
-    getPlayerNames();
+    game.getPlayerNames();
+    game.startTurn();
+
+    $(function() {
+      $(".draggable").draggable({
+        stop: dragend
+      });
+    });
+    $(document).on('click','#submit-turn button', game.submitTurn)
+
   },
 
   drawLetter(letter) {
@@ -71,31 +75,59 @@ var game = {
     //"<div class="score">' + gameConst.scoreLetters[letter]+ '</div>'
   },
   endTurn() {
+    var letters = [];
     $('td .draggable').each(function(e, o) {
       var cell = $(this);
       var string = cell.parent().attr('id');
+      var row = string.substr(4, string.length - 5);
+      var col = string.substr(string.length-1, 1);
       cell.toggleClass("draggable");
+      cell.toggleClass("notdraggable");
+
       $(string).toggleClass("occupied");
-
-
-      console.log(string);
+      var letterScore = cell.children().first().html();
+      var letter = letterScore.substr(0, letterScore.indexOf('<'));
+      letters.push([row, col, letter])
+      game.board[row][col] = letter;
+      game.currPlayer.removeLetters([letter]);
     });
+    game.currPlayer.topUp()
+
+    if(letters.length == 0) {
+      return;
+    }
+
+    // $(".notdraggable").draggable({disable : true})
+
     // $("#cell" + row + col).toggleClass("occupied");
 
-
+    // game.currPlayer.topUp();
+    game.printBoard();
     return false;
   },
 
-  newTurn() {
-    game.turns++;
-    var currPlayer = game.players[game.turns % game.players.length];
-    currPlayer.topUp();
+  printBoard() {
+    for (var i = 1; i < gameConst.boardSize + 1; i++) {
+      var string = "";
+      for (var j = 0; j < gameConst.boardSize; j++) {
+        var letter = game.board[i][String.fromCharCode(65 + j)];
+        if(letter == "" ) {
+          letter = "."
+        }
+        string += letter + " ";
+      }
+      console.log(string);
+    }
+  },
 
-    currPlayer.drawTurn();
+  startTurn() {
+    game.currPlayer = game.players[game.turns % game.players.length];
+
+    game.currPlayer.drawTurn();
+
   },
 
   drawBoard() {
-
     var string = '<table id="board">';
     string += '<th id="row0">'
       // string += '<td></td>'
@@ -140,7 +172,8 @@ var game = {
     if(!game.endTurn()) {
       // return;
     }
-    game.newTurn();
+    game.turns++;
+    game.startTurn();
   }
 
 }

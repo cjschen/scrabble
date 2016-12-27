@@ -6,6 +6,12 @@ class Player {
     this.score = 0;
     this.topUp()
   }
+  removeLetters(letters) {
+    for(var i in letters) {
+      this.letters.splice(this.letters.indexOf(letters[i]));
+    }
+    console.log(this.letters);
+  }
 
   topUp() {
     var n =  gameConst.maxPlayerLetters - this.letters.length;
