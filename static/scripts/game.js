@@ -91,10 +91,21 @@ var game = {
       game.board[row][col] = letter;
       game.currPlayer.removeLetters([letter]);
     });
+
+    if(game.turns == 0 && game.board[8][8] == "") {
+      return false;
+    }
+
+    else {
+      // game.currPlayer.
+      return true;
+    }
+
+
     game.currPlayer.topUp()
 
     if(letters.length == 0) {
-      return;
+      return false;
     }
 
     // $(".notdraggable").draggable({disable : true})
@@ -105,7 +116,15 @@ var game = {
     game.printBoard();
     return false;
   },
-
+  drawScores() {
+    $('#player-scores').remove();
+    var table = '<div id="player-scores">';
+    for (var i in game.players) {
+      table += '<p>' + game.players[i].name + ": " + game.players[i].score + '</p>'
+    }
+    table += "</div>";
+    $('body').append(table);
+  },
   printBoard() {
     for (var i = 1; i < gameConst.boardSize + 1; i++) {
       var string = "";
@@ -122,7 +141,7 @@ var game = {
 
   startTurn() {
     game.currPlayer = game.players[game.turns % game.players.length];
-
+    game.drawScores()
     game.currPlayer.drawTurn();
 
   },

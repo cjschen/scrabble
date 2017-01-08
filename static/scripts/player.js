@@ -6,6 +6,9 @@ class Player {
     this.score = 0;
     this.topUp()
   }
+  addScore(score) {
+    this.score += score;
+  }
   removeLetters(letters) {
     for(var i in letters) {
       this.letters.splice(this.letters.indexOf(letters[i]));
@@ -28,17 +31,20 @@ class Player {
   getLetters() {
     return this.letters
   }
-
-  drawTurn() {
-    $("#player-letters").remove();
-    var string = '<div id="player-letters">';
-    string += "<div id='player-header'>"
+  drawPlayerHeader() {
+    var string += "<div id='player-header'>"
     string +=     '<svg width="10" height="10" class="player-color">';
     string +=       '<rect width="10" height="10"';
     string +=       'style="fill:' + gameConst.playerColor[this.number] + ";";
     string +=       'stroke-width:1;stroke:rgb(0,0,0)"/>';
     string +=     '</svg>' + this.name;
     string +=   '</div>';
+    return string;
+  }
+  drawTurn() {
+    $("#player-letters").remove();
+    var string = '<div id="player-letters">';
+    string += drawPlayerHeader();
     string +=   '<div id="letter-rack">';
 
     for(var i in this.letters) {

@@ -47,14 +47,24 @@ td {
 .letter sub {
   font-size: 13px;
 }
+#board {
+  float: left;
+}
 #board td {
   border: black 1px solid;
   height: 60px;
   width: 60px;
   padding: 7px;
 }
+#player-scores {
+  float: right;
+  width: 200px;
+  border: 1px black solid;
+}
 #player-letters {
   height: 150px;
+  margin-top: 10px;
+  float: left;
   width: 500px;
   padding: 5px;
   border: 1px black solid;
