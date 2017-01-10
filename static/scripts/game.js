@@ -120,7 +120,8 @@ var game = {
     $('#player-scores').remove();
     var table = '<div id="player-scores">';
     for (var i in game.players) {
-      table += '<p>' + game.players[i].name + ": " + game.players[i].score + '</p>'
+      table +=  game.players[i].drawPlayerHeader();
+      // table += '<p>' + game.players[i].name + ": " + game.players[i].score + '</p>'
     }
     table += "</div>";
     $('body').append(table);

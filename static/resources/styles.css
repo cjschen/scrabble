@@ -58,6 +58,7 @@ td {
 }
 #player-scores {
   float: right;
+  padding: 4px;
   width: 200px;
   border: 1px black solid;
 }

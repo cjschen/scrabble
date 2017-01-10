@@ -32,7 +32,7 @@ class Player {
     return this.letters
   }
   drawPlayerHeader() {
-    var string += "<div id='player-header'>"
+    var string = "<div id='player-header'>"
     string +=     '<svg width="10" height="10" class="player-color">';
     string +=       '<rect width="10" height="10"';
     string +=       'style="fill:' + gameConst.playerColor[this.number] + ";";
@@ -44,8 +44,8 @@ class Player {
   drawTurn() {
     $("#player-letters").remove();
     var string = '<div id="player-letters">';
-    string += drawPlayerHeader();
-    string +=   '<div id="letter-rack">';
+    string += this.drawPlayerHeader();
+    string += '<div id="letter-rack">';
 
     for(var i in this.letters) {
          string += '<div class="letter draggable">' + game.drawLetter(this.letters[i]) + "</div>"
